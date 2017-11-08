@@ -19,6 +19,9 @@
       <label for="op2">Segundo operando</label>
       <input type="text" name="op2" id="op2"><br>
 
+      <label for="resultado">Resultado</label>
+      <input type="text" id="resultado"><br>
+
       <select name="op">
         <option value="+">Suma</option>
         <option value="-">Resta</option>
@@ -73,8 +76,6 @@
         <?php else: ?>
           <h3>Error: Se deben introducir números</h3>
         <?php endif ?>
-      <?php else: ?>
-
       <?php endif ?>
 
 
