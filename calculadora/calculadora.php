@@ -7,7 +7,7 @@
   <body>
     <?php
 
-    $op1 = $op2 = $op = $res = null;
+    $op1 = $op2 = $op  = null;
     extract($_GET, EXTR_IF_EXISTS);
 
 
@@ -53,7 +53,7 @@
       <?php if (isset($op1, $op2, $op)): ?>
         <?php if (is_numeric($op1) && is_numeric($op2)): ?>
           <?php if (in_array($op, ['*', '+', '/', '-'])): ?>
-            <?php $res = calcula($op1, $op2, $op) ?>
+            <?php $op1 = calcula($op1, $op2, $op) ?>
           <?php else: ?>
             <h3>Error: Operación inválida</h3>
           <?php endif ?>
@@ -72,8 +72,6 @@
         <label for="op2">Segundo operando</label>
         <input type="text" name="op2" id="op2" value="<?= $op2 ?>"><br>
 
-        <label for="resultado">Resultado</label>
-        <input type="text" id="resultado" value="<?= $res ?>" ><br>
 
         <select name="op">
           <option value="+" <?= selected("+", $op) ?> >Suma</option>
