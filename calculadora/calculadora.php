@@ -44,9 +44,13 @@
         return $resultado;
       }
 
+      function selected(string $v, ?string $o): string
+      {
+          return $v == $o ? 'selected': '';
+      }
 
       ?>
-      <?php if (isset($op1, $op2)): ?>
+      <?php if (isset($op1, $op2, $op)): ?>
         <?php if (is_numeric($op1) && is_numeric($op2)): ?>
           <?php if (in_array($op, ['*', '+', '/', '-'])): ?>
             <?php $res = calcula($op1, $op2, $op) ?>
@@ -56,6 +60,8 @@
         <?php else: ?>
           <h3>Error: Se deben introducir números</h3>
         <?php endif ?>
+    <? elseif ($op1 !== null || $op2 !== null || $op !== null): ?>
+          <h3>Error: Falta algún parámetro</h3>
       <?php endif ?>
 
       <form action="calculadora.php" method="get">
@@ -70,10 +76,10 @@
         <input type="text" id="resultado" value="<?= $res ?>" ><br>
 
         <select name="op">
-          <option value="+" <?php if ("+" == $op): ?> selected <?php endif ?> >Suma</option>
-          <option value="-" <?php if ("-" == $op): ?> selected <?php endif ?> >Resta</option>
-          <option value="*" <?php if ("*" == $op): ?> selected <?php endif ?> >Multiplicar</option>
-          <option value="/" <?php if ("/" == $op): ?> selected <?php endif ?> >Dividir</option>
+          <option value="+" <?= selected("+", $op) ?> >Suma</option>
+          <option value="-" <?= selected("-", $op) ?> >Resta</option>
+          <option value="*" <?= selected("*", $op) ?> >Multiplicar</option>
+          <option value="/" <?= selected("/", $op) ?> >Dividir</option>
         </select>
 
         <input type="submit" value="Calcular">
