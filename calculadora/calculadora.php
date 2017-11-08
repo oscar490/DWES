@@ -7,32 +7,10 @@
   <body>
     <?php
 
-    $op1 = $op2 = $op = null;
+    $op1 = $op2 = $op = $res = null;
     extract($_GET, EXTR_IF_EXISTS);
 
-    ?>
-    <form action="calculadora.php" method="get">
 
-      <label for="op1">Primer operando</label>
-      <input type="text" name="op1" id="op1"><br>
-
-      <label for="op2">Segundo operando</label>
-      <input type="text" name="op2" id="op2"><br>
-
-      <label for="resultado">Resultado</label>
-      <input type="text" id="resultado"><br>
-
-      <select name="op">
-        <option value="+">Suma</option>
-        <option value="-">Resta</option>
-        <option value="*">Multiplicar</option>
-        <option value="/">Dividir</option>
-      </select>
-
-      <input type="submit" value="Calcular">
-
-    </form>
-      <?php
 
 
       /**
@@ -65,11 +43,20 @@
 
         return $resultado;
       }
+
+      function seleccion($cadena)
+      {
+        global $op;
+        if ($cadena == $op) {
+            return 'selected';
+        }
+
+      }
       ?>
       <?php if (isset($op1, $op2)): ?>
         <?php if (is_numeric($op1) && is_numeric($op2)): ?>
           <?php if (in_array($op, ['*', '+', '/', '-'])): ?>
-            <p>El resultado es <?= calcula($op1, $op2, $op) ?></p>
+            <?php $res = calcula($op1, $op2, $op) ?>
           <?php else: ?>
             <h3>Error: Operación inválida</h3>
           <?php endif ?>
@@ -78,6 +65,27 @@
         <?php endif ?>
       <?php endif ?>
 
+      <form action="calculadora.php" method="get">
+
+        <label for="op1">Primer operando</label>
+        <input type="text" name="op1" id="op1" value="<?= $op1 ?>"><br>
+
+        <label for="op2">Segundo operando</label>
+        <input type="text" name="op2" id="op2" value="<?= $op2 ?>"><br>
+
+        <label for="resultado">Resultado</label>
+        <input type="text" id="resultado" value="<?= $res ?>" ><br>
+
+        <select name="op">
+          <option value="+" <?= seleccion("+") ?>>Suma</option>
+          <option value="-" <?= seleccion("-") ?>>Resta</option>
+          <option value="*" <?= seleccion("*") ?>>Multiplicar</option>
+          <option value="/" <?= seleccion("/") ?>>Dividir</option>
+        </select>
+
+        <input type="submit" value="Calcular">
+
+      </form>
 
   </body>
 </html>
