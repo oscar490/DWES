@@ -44,25 +44,7 @@
         return $resultado;
       }
 
-      /**
-       * Se encarga de que se muestre el operador usado para realizar la
-       * operación aritmética.
-       * @param  string $cadena La cadena que repesenta el operador.
-       * @return string         El atributo de seleccionado.
-       */
-      function seleccion(string $cadena): string
-      {
-        $re = "";
 
-        global $op;
-
-        if ($cadena == $op) {
-            $re = 'selected';
-        }
-
-        return $re;
-
-      }
       ?>
       <?php if (isset($op1, $op2)): ?>
         <?php if (is_numeric($op1) && is_numeric($op2)): ?>
@@ -88,10 +70,10 @@
         <input type="text" id="resultado" value="<?= $res ?>" ><br>
 
         <select name="op">
-          <option value="+" <?= seleccion("+") ?>>Suma</option>
-          <option value="-" <?= seleccion("-") ?>>Resta</option>
-          <option value="*" <?= seleccion("*") ?>>Multiplicar</option>
-          <option value="/" <?= seleccion("/") ?>>Dividir</option>
+          <option value="+" <?php if ("+" == $op): ?> selected <?php endif ?> >Suma</option>
+          <option value="-" <?php if ("-" == $op): ?> selected <?php endif ?> >Resta</option>
+          <option value="*" <?php if ("*" == $op): ?> selected <?php endif ?> >Multiplicar</option>
+          <option value="/" <?php if ("/" == $op): ?> selected <?php endif ?> >Dividir</option>
         </select>
 
         <input type="submit" value="Calcular">
