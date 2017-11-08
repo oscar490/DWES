@@ -44,12 +44,23 @@
         return $resultado;
       }
 
-      function seleccion($cadena)
+      /**
+       * Se encarga de que se muestre el operador usado para realizar la
+       * operación aritmética.
+       * @param  string $cadena La cadena que repesenta el operador.
+       * @return string         El atributo de seleccionado.
+       */
+      function seleccion(string $cadena): string
       {
+        $re = "";
+
         global $op;
+
         if ($cadena == $op) {
-            return 'selected';
+            $re = 'selected';
         }
+
+        return $re;
 
       }
       ?>
