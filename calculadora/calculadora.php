@@ -6,12 +6,40 @@
   </head>
   <body>
       <?php
-      $op1 = $op2 = null;
+      $op1 = $op2 = $op = null;
       extract($_GET, EXTR_IF_EXISTS);
+
+      function calcula($op1, $op2, $op)
+      {
+        switch ($op) {
+          case '+':
+            $resultado = $op1 + $op2;
+            break;
+
+          case '-':
+            $resultado = $op1 - $op2;
+            break;
+
+          case '*':
+            $resultado = $op1 * $op2;
+            break;
+
+          case '/':
+            $resultado = $op1 / $op2;
+            break;
+
+        }
+
+        return $resultado;
+      }
       ?>
       <?php if (isset($op1, $op2)): ?>
         <?php if (is_numeric($op1) && is_numeric($op2)): ?>
-          <p>El resultado es <?= $op1 + $op2 ?></p>
+          <?php if (in_array($op, ['*', '+', '/', '-'])): ?>
+            <p>El resultado es <?= calcula($op1, $op2, $op) ?></p>
+          <?php else: ?>
+            <h3>Error: Operación inválida</h3>
+          <?php endif ?>
         <?php else: ?>
           <h3>Error: Se deben introducir números</h3>
         <?php endif ?>
