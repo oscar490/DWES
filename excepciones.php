@@ -2,6 +2,7 @@
 <?php
 
 try {
+    intdiv(3, 0);
     throw new TypeError("Error horroroso.");
     echo 'Se ha saltado la excepción';
 } catch (ErrorException $e) {

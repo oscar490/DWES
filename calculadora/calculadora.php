@@ -9,24 +9,21 @@
 
     $op1 = $op2 = $op  = null;
     extract($_GET, EXTR_IF_EXISTS);
-
+    define('OPERACIONES', ['+', '-', '/', '*']);
+    $error = [];
     require 'auxiliar.php';
+    try {
+        compruebaParametros($op1, $op2, $op, $error);
+        compruebaOperador($op, OPERACIONES, $error);
+        compruebaOperandos($op1, $op2, $error);
+        compruebaError($error);
+        $op1 = eval("return $op1 $op $op2 ;");
+    } catch (Exception $e) {
+        mostrarErrores($error);
+    }
 
 
       ?>
-      <?php if (isset($op1, $op2, $op)): ?>
-        <?php if (is_numeric($op1) && is_numeric($op2)): ?>
-          <?php if (in_array($op, ['*', '+', '/', '-'])): ?>
-            <?php $op1 = calcula($op1, $op2, $op) ?>
-          <?php else: ?>
-            <h3>Error: Operación inválida</h3>
-          <?php endif ?>
-        <?php else: ?>
-          <h3>Error: Se deben introducir números</h3>
-        <?php endif ?>
-    <? elseif ($op1 == null || $op2 == null || $op == null): ?>
-         <h3>Error: Falta algún parámetro</h3>
-      <?php endif ?>
 
       <form action="calculadora.php" method="get">
 
