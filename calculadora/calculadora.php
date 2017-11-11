@@ -9,7 +9,8 @@
       require 'auxiliar.php';
 
       $op1 = $op2 = $op  = null;
-      extract($_GET, EXTR_IF_EXISTS);
+
+      asignarValores($op1, $op2, $op);
       define('OPERACIONES', ['+', '-', '/', '*']);
       $error = [];
 
@@ -18,7 +19,7 @@
         compruebaOperador($op, OPERACIONES, $error);
         compruebaOperandos($op1, $op2, $error);
         compruebaError($error);
-        $op1 = eval("return $op1 $op $op2 ;");
+        $op1 = calcula($op1, $op2, $op);
     } catch (Exception $e) {
         mostrarErrores($error);
     }
