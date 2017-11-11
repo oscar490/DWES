@@ -36,6 +36,7 @@ function selected(string $v, ?string $o): string
     return $v == $o ? 'selected': '';
 }
 
+
 function compruebaParametros($op1, $op2, $op, array &$error): void
 {
     if (isset($op1, $op2, $op)){
@@ -85,6 +86,15 @@ function mostrarErrores($error)
     }
 }
 
+function mostrarOpciones(array $lista, $op)
+{
+    foreach ($lista as $v) {
+      ?>
+      <option value="<?= $v ?>" <?= selected("<?= $v ?>", $op) ?>><?= $v ?></option>
+      <?php
+    }
+}
+
 
 function dibujarFormulario($op1, $op2, $op, $lista): void
 {
@@ -95,10 +105,7 @@ function dibujarFormulario($op1, $op2, $op, $lista): void
           <label for="op2">Segundo operando</label>
           <input type="text" name="op2" id="op2" value="<?= $op2 ?>"><br>
           <select name="op">
-            <option value="+" <?= selected("+", $op) ?> >Suma</option>
-            <option value="-" <?= selected("-", $op) ?> >Resta</option>
-            <option value="*" <?= selected("*", $op) ?> >Multiplicar</option>
-            <option value="/" <?= selected("/", $op) ?> >Dividir</option>
+            <?php mostrarOpciones($lista, $op) ?>
           </select>
           <input type="submit" value="Calcular">
         </form>
