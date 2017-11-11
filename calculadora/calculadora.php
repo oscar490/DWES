@@ -10,7 +10,7 @@
 
       $op1 = $op2 = $op  = null;
 
-      asignarValores($op1, $op2, $op);
+      extract($_GET, EXTR_IF_EXISTS);
       define('OPERACIONES', ['+', '-', '/', '*']);
       $error = [];
 
@@ -19,7 +19,7 @@
         compruebaOperador($op, OPERACIONES, $error);
         compruebaOperandos($op1, $op2, $error);
         compruebaError($error);
-        $op1 = calcula($op1, $op2, $op);
+        $op1 = eval("return $op1 $op $op2;");
     } catch (Exception $e) {
         mostrarErrores($error);
     }

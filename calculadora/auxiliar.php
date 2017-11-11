@@ -36,14 +36,6 @@ function selected(string $v, ?string $o): string
     return $v == $o ? 'selected': '';
 }
 
-function asignarValores(&$op1, &$op2, &$op)
-{
-    if (!empty($_GET)) {
-      $op1 = $_GET['op1'];
-      $op2 = $_GET['op2'];
-      $op = $_GET['op'];
-    }
-}
 
 function compruebaParametros($op1, $op2, $op, array &$error): void
 {
