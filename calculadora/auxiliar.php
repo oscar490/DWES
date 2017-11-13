@@ -101,9 +101,9 @@ function dibujarFormulario($op1, $op2, $op, $lista): void
     ?>
         <form action="calculadora.php" method="get">
           <label for="op1">Primer operando</label>
-          <input type="text" name="op1" id="op1" value="<?= $op1 ?>"><br>
+          <input type="text" name="op1" id="op1" value="<?= htmlentities($op1) ?>"><br>
           <label for="op2">Segundo operando</label>
-          <input type="text" name="op2" id="op2" value="<?= $op2 ?>"><br>
+          <input type="text" name="op2" id="op2" value="<?= htmlentities($op2) ?>"><br>
           <select name="op">
             <?php mostrarOpciones($lista, $op) ?>
           </select>

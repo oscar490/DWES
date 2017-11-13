@@ -7,12 +7,14 @@
   <body>
       <?php
       require 'auxiliar.php';
+      
 
       $op1 = $op2 = $op  = null;
 
       extract($_GET, EXTR_IF_EXISTS);
       define('OPERACIONES', ['+', '-', '/', '*']);
       $error = [];
+
 
     try {
         compruebaParametros($op1, $op2, $op, $error);
