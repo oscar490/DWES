@@ -7,11 +7,19 @@
   <body>
       <?php
       require 'auxiliar.php';
-      
 
-      $op1 = $op2 = $op  = null;
 
-      extract($_GET, EXTR_IF_EXISTS);
+      //    $op1 = $op2 = $op  = null;
+
+      //    extract($_GET, EXTR_IF_EXISTS);
+
+      //    Recojo el valor y se comprueba si es correcto
+      $op1 = filter_input(INPUT_GET, 'op1');
+      $op2 = filter_input(INPUT_GET, 'op2');
+      $op = filter_input(INPUT_GET, 'op');
+      var_dump($op1);
+      var_dump($op2);
+      var_dump($op);
       define('OPERACIONES', ['+', '-', '/', '*']);
       $error = [];
 
