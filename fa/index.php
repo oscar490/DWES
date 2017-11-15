@@ -9,7 +9,6 @@
         <?php
         $pdo = new PDO('pgsql:host=localhost;dbname=fa','fa','fa');
         $query = $pdo->query('SELECT * FROM peliculas');
-        $filas = $query->fetchAll();
         ?>
         <table border="1">
             <thead>
@@ -20,14 +19,14 @@
                 <th>Duración</th>
                 <th>Género</th>
             </thead>
-                <?php foreach($filas as $fi): ?>
+                <?php foreach($query as $fila): ?>
                     <tr>
-                        <td><?= $fi['id']?></td>
-                        <td><?= $fi['titulo']?></td>
-                        <td><?= $fi['anyo']?></td>
-                        <td><?= $fi['sinopsis']?></td>
-                        <td><?= $fi['duracion']?></td>
-                        <td><?= $fi['genero_id']?></td>
+                        <td><?= $fila['id']?></td>
+                        <td><?= $fila['titulo']?></td>
+                        <td><?= $fila['anyo']?></td>
+                        <td><?= $fila['sinopsis']?></td>
+                        <td><?= $fila['duracion']?></td>
+                        <td><?= $fila['genero_id']?></td>
                     </tr>
                 <?php endforeach ?>
             <tbody>
