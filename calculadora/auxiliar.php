@@ -33,6 +33,7 @@ function calcula(float $op1, float $op2, string $op): float
 
 function selected(string $v, ?string $o): string
 {
+
     return $v == $o ? 'selected': '';
 }
 
