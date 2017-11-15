@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Formulario</title>
+  </head>
+  <body>
+    <h2>Videoclub Pajaritos</h2>
+
+    <form  action="videoclub.php" method="get">
+      <label for="titulo">Titulo</label>
+      <input type="text" name="titulo" id="titulo"><br><br>
+
+      <label for="director">Director</label>
+      <input type="text" name="director" id="director"><br><br>
+
+      <label for="anio">Año</label>
+      <input type="text" name="anio" id="anio"><br><br>
+
+      <label for="genero">Género</label>
+      <select name="genero" id="genero">
+        <option value="comedia">Comedia</option>
+        <option value="drama">Drama</option>
+        <option value="accion">Acción</option>
+        <option value="terror">Terror</option>
+        <option value="suspense">Suspense</option>
+        <option value="otras">Otras</option>
+      </select><br><br>
+
+      <label for="duracion">Duración</label><br>
+      <input type="text" name="duracion" id="duracion"><br><br>
+
+      <label for="sipnosis">Sipnosis</label><br>
+      <textarea name="sipnosis" rows="8" cols="80"></textarea><br><br>
+
+      <label for="edad">Restricción de edad</label><br>
+      <input type="radio" name="edad" id="edad" value="todos" checked>Todos los públicos <br>
+      <input type="radio" name="edad" id="edad" value="mayores_7">Mayores de 7 años <br>
+      <input type="radio" name="edad" id="edad" value="mayores_18">Mayores de 18 años <br>
+      <br><br>
+
+      <input type="submit" value="Guardar película">
+    </form>
+
+  </body>
+</html>
