@@ -10,11 +10,19 @@
     require 'funciones.php';
 
     $titulo = $director = $anio = $genero = $duracion = $sipnosis = null;
-    $edad = null;
+    $edad = $imagen = null;
 
     extract($_GET, EXTR_IF_EXISTS);
-    mostrarTabla([$titulo, $director, $anio, $genero, $duracion, $sipnosis, $edad]);
     ?>
+    <h2>La película introducida es: </h2><br><br>
+
+    <p>Titulo:: <?= htmlentities($titulo) ?></p>
+    <p>Actores: <?= htmlentities($actores)?></p>
+    <p>Director: <?= htmlentities($actores) ?></p>
+    <p>Año: <?= htmlentities($anio) ?></p>
+    <p>Género: <?= htmlentities($genero) ?></p>
+    
+
 
   </body>
 </html>
