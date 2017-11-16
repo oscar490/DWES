@@ -42,7 +42,8 @@ echo
 read -p "Nombre del fichero SQL: " fich
 
 touch $dominio/db/$fich.sql
-touch $dominio/index.php
+touch $dominio/$dominio.php
+touch $dominio/formulario
 
 echo "Se crea el directorio del proyecto con el contenido necesario."
 
@@ -57,7 +58,7 @@ sudo chmod a+x db/acceso.sh
 # Se abre el proyecto con atom.
 atom ~/web/DWES/$dominio
 
-
+xdg-open http://$dominio.local
 
 
 
