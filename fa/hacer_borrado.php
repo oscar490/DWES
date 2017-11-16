@@ -13,17 +13,19 @@
                 throw new Exception('Parámetro incorrecto.');
             }
             $pdo = new PDO('pgsql:host=localhost;dbname=fa','fa','fa');
-            $query = $pdo->query("SELECT id
+            $query = $pdo->prepare("SELECT COUNT(*)
                                     FROM peliculas
-                                   WHERE id = $id");
+                                   WHERE id = :id");
+            $query->execute([':id'=>$id]);
             $fila = $query->fetch();
-            if (empty($fila)) {
+            if ($query->fetchColumn() === 0) {
                 throw new Exception('La película no existe.');
             }
-            $numFilas = $pdo->exec("DELETE FROM peliculas
-                                          WHERE id = $id");
+            $query = $pdo->prepare("DELETE FROM peliculas
+                                          WHERE id = :id");
+            $query->execute([':id' => $id]);
 
-            if ($numFilas !== 1) {
+            if ($query->rowCount() !== 1) {
                 throw new Exception('Ha ocurrido un error al eliminar la pelicula.');
             }
             ?>
@@ -32,7 +34,10 @@
             <?php
 
         } catch (Exception $e) {
-            
+            ?>
+            <h3>Error: <?= $e->getMessage() ?></h3>
+            <a href="index.php">Volvel</a>
+            <?php
         }
 
         ?>
