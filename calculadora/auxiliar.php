@@ -33,12 +33,14 @@ function calcula(float $op1, float $op2, string $op): float
 
 function selected(string $v, ?string $o): string
 {
+
     return $v == $o ? 'selected': '';
 }
 
 
 function compruebaParametros($op1, $op2, $op, array &$error): void
 {
+
     if (isset($op1, $op2, $op)){
         return;
     }
@@ -59,7 +61,9 @@ function compruebaOperador($op, array $lista, array &$error): void
 
 function compruebaOperandos($op1, $op2, array &$error): void
 {
-    if (!is_numeric($op1) || !is_numeric($op2)) {
+    if (filter_var($op1, FILTER_VALIDATE_FLOAT) === false ||
+        filter_var($op2, FILTER_VALIDATE_FLOAT) === false) {
+    //      if (!is_numeric($op1) || !is_numeric($op2)) {
         $error[] = 'Los dos operandos deben ser numéricos';
     } elseif ($op1 < 0 || $op2 < 0) {
         $error[] = 'Los dos operandos deben ser positivos';
@@ -101,9 +105,9 @@ function dibujarFormulario($op1, $op2, $op, $lista): void
     ?>
         <form action="calculadora.php" method="get">
           <label for="op1">Primer operando</label>
-          <input type="text" name="op1" id="op1" value="<?= $op1 ?>"><br>
+          <input type="text" name="op1" id="op1" value="<?= htmlentities($op1) ?>"><br>
           <label for="op2">Segundo operando</label>
-          <input type="text" name="op2" id="op2" value="<?= $op2 ?>"><br>
+          <input type="text" name="op2" id="op2" value="<?= htmlentities($op2) ?>"><br>
           <select name="op">
             <?php mostrarOpciones($lista, $op) ?>
           </select>
