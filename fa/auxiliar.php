@@ -3,7 +3,8 @@
 
 /**
  * Crea una conexión a la base de datos y la devuelve.
- * @return PDO La instacia de la clase PDO que representa la conexión.
+ * @return PDO          La instacia de la clase PDO que representa la conexión.
+ * @throws PDOException Si se produce algún error que impide la conexión.
  */
 function conectar(): PDO
 {
