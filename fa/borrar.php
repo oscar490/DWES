@@ -6,6 +6,8 @@
     </head>
     <body>
         <?php
+        require 'auxiliar.php';
+
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         try {
             if (!is_int($id)) {
@@ -13,7 +15,7 @@
             }
 
 
-            $pdo = new PDO('pgsql:host=localhost;dbname=fa','fa','fa');
+            $pdo = conectar();
             $query = $pdo->query("SELECT *
                                     FROM peliculas
                                    WHERE id = $id");

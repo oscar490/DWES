@@ -6,13 +6,15 @@
     </head>
     <body>
         <?php
+        require 'auxiliar.php';
 
         $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT) ?? false;
         try {
             if ($id === false) {
                 throw new Exception('Parámetro incorrecto.');
             }
-            $pdo = new PDO('pgsql:host=localhost;dbname=fa','fa','fa');
+            $pdo = conectar();
+            
             $query = $pdo->prepare("SELECT COUNT(*)
                                     FROM peliculas
                                    WHERE id = :id");
