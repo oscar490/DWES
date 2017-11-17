@@ -6,22 +6,14 @@
     </head>
     <body>
         <?php
+        require 'auxiliar.php';
+
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         try {
-            if (!is_int($id)) {
-                throw new Exception('Parámetro incorrecto');
-            }
+            comprobarParametro($id);
 
-
-            $pdo = new PDO('pgsql:host=localhost;dbname=fa','fa','fa');
-            $query = $pdo->query("SELECT *
-                                    FROM peliculas
-                                   WHERE id = $id");
-            $fila = $query->fetch();
-
-            if (empty($fila)) {
-                throw new Exception('La pelicula no existe');
-            }
+            $pdo = conectar();
+            $fila = buscarPelicula($pdo, $id);
 
             ?>
                 <h3>
@@ -34,10 +26,7 @@
                 </form>
                 <?php
             } catch (Exception $e) {
-                ?>
-                <h3>Error: <?= $e->getMessage() ?></h3>
-                <a href="index.php">Volvel</a>
-                <?php
+                mostrarErrores($e);
             }
         ?>
     </body>
