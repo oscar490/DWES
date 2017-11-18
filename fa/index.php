@@ -8,7 +8,7 @@
                 margin-bottom: 12px;
             }
 
-            #table {
+            #tabla {
                 margin: auto;
             }
         </style>
@@ -16,13 +16,18 @@
     <body>
         <?php
         $titulo = filter_input(INPUT_GET, 'titulo') ?? '';
+        var_dump($titulo);
         ?>
         <div id="buscar">
+          <fieldset>
             <form action="index.php" method="get">
+              <legend>Buscar</legend>
                 <label for="titulo">Titulo</label>
-                <input type="text" name="titulo" idÇ="titulo" />
+                <input type="text" name="titulo" id="titulo"
+                    value="<?= $titulo ?>"/>
                 <input type="submit" name="" value="Buscar" />
             </form>
+          </fieldset>
         </div>
 
 
