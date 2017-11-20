@@ -97,3 +97,59 @@ function mostrarErrores(Exception $e): void
     <?php
     volver();
 }
+
+
+function comprobarTitulo(string $titulo, array &$error): void
+{
+    if ($titulo === '') {
+        $error[] = 'El título es obligatorio';
+        return;
+    }
+    if (mb_strlen($titulo) > 255) {
+        $error[] = 'El título es demasiado largo';
+    }
+
+    $pdo = conectar();
+
+}
+
+function comprobarAnyo(string $anyo, array & $error): void
+{
+    if ($anyo === '') {
+        return;
+    }
+    $filtro = filter_var($anyo, FILTER_VALIDATE_INT, [
+        'options' => [
+            'min_range' => 0,
+            'max_range' => 9999,
+        ],
+    ]);
+
+    if ($filtro === false) {
+        $error[] = 'No es un año válido';
+    }
+}
+
+function comprobarduracion (string $duracion, array & $error)
+{
+    if ($duracion === '') {
+        return;
+    }
+    $filtro = filter_var($duracion, FILTER_VALIDATE_INT, [
+        'options' => [
+            'min_range' => 0,
+            'max_range' => 32767,
+        ]
+    ]);
+
+    if ($filtro === false) {
+        $error[] = 'No es una duración máxima';
+    }
+}
+
+function comprobarErrores(arrar $error): void
+{
+    if (!empty($error)) {
+        throw new Exception;
+    }
+}
