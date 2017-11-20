@@ -15,7 +15,7 @@
     </head>
     <body>
         <?php
-        $titulo = filter_input(INPUT_GET, 'titulo') ?? '';
+        $titulo = trim(filter_input(INPUT_GET, 'titulo')) ?? '';
         ?>
         <div id="buscar">
           <fieldset>
@@ -38,7 +38,7 @@
                                 FROM peliculas
                                 WHERE lower(titulo) LIKE lower(:titulo)');
 
-        $sent->execute([':titulo' =>"%$titulo%" ]);
+        $sent->execute([':titulo' =>"%$titulo%"]);
         ?>
         <div class="">
             <table border="1" id="tabla">
