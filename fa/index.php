@@ -16,12 +16,11 @@
     <body>
         <?php
         $titulo = filter_input(INPUT_GET, 'titulo') ?? '';
-        var_dump($titulo);
         ?>
         <div id="buscar">
           <fieldset>
-            <form action="index.php" method="get">
               <legend>Buscar</legend>
+            <form action="index.php" method="get">
                 <label for="titulo">Titulo</label>
                 <input type="text" name="titulo" id="titulo"
                     value="<?= $titulo ?>"/>
@@ -35,7 +34,11 @@
         require 'auxiliar.php';
 
         $pdo = conectar();
-        $query = $pdo->query('SELECT * FROM peliculas');
+        $sent = $pdo->prepare('SELECT *
+                                FROM peliculas
+                                WHERE lower(titulo) LIKE lower(:titulo)');
+
+        $sent->execute([':titulo' =>"%$titulo%" ]);
         ?>
         <div class="">
             <table border="1" id="tabla">
@@ -48,7 +51,7 @@
                     <th>Género</th>
                     <th>Operaciones</th>
                 </thead>
-                    <?php foreach($query as $fila): ?>
+                    <?php foreach($sent as $fila): ?>
                         <tr>
 
                             <td><?= $fila['titulo']?></td>
