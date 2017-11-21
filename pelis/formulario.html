@@ -5,28 +5,18 @@
         <title>Formulario</title>
     </head>
     <body>
-        <form action="pelis.php" method="post">
-            <!-- Titulo -->
-            <div >
-                <label for="titulo">Titulo</label>
-                <input type="text" name="titulo" id="titulo">
-            </div><br>
+      <form action="pelis.php" method="get">
 
-            <!-- Año -->
-            <div >
-                <label for="anyo">Año</label>
-                <input type="text" name="anyo" id="anyo">
-            </div><br>
+          <div >
+              <label for="titulo">Titulo</label>
+              <input type="text" name="titulo" id="titulo"
+              value="<?= $titulo ?>">
+          </div><br>
 
-            <!-- Argumento -->
-            <div >
-                <label for="argumento">Argumento</label><br>
-                <textarea name="argumento" rows="8" cols="80" id="argumento"></textarea>
-            </div><br>
 
-            <div >
-                <input type="submit" value="Enviar">
-            </div>
-        </form>
+          <div >
+              <input type="submit" value="Enviar">
+          </div>
+      </form>
     </body>
 </html>
