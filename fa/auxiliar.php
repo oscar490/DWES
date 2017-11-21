@@ -26,7 +26,7 @@ function conectar(): PDO
  * @return array           La fila que contiene los datos de la película.
  * @throws Exception       Si la película no existe.
  */
-function buscarPelicula(PDO $pdo, int $id, array & $error): array
+function buscarPelicula(PDO $pdo, int $id, array &$error): array
 {
     $sent = $pdo->prepare("SELECT *
                              FROM peliculas
@@ -101,7 +101,7 @@ function mostrarErrores(array &$error): void
 {
     foreach ($error as $v) {
         ?>
-        <h3>Error: <?= h($error) ?></h3>
+        <h3>Error: <?= h($v) ?></h3>
         <?php
     }
 }
@@ -111,7 +111,7 @@ function mostrarErrores(array &$error): void
  * @param  string $mensaje La cadena a escapar.
  * @return string          La cadena escapada.
  */
-function h(string $mensaje )
+function h(?string $mensaje )
 {
     return htmlspecialchars($mensaje, ENT_QUOTES | ENT_SUBSTITUTE);
 }
@@ -130,7 +130,7 @@ function comprobarTitulo(string $titulo, array &$error): void
 
 }
 
-function comprobarAnyo(string $anyo, array & $error): void
+function comprobarAnyo(string $anyo, array &$error): void
 {
     if ($anyo === '') {
         return;
@@ -147,7 +147,7 @@ function comprobarAnyo(string $anyo, array & $error): void
     }
 }
 
-function comprobarduracion (string $duracion, array & $error)
+function comprobarDuracion (string $duracion, array &$error)
 {
     if ($duracion === '') {
         return;
@@ -164,9 +164,80 @@ function comprobarduracion (string $duracion, array & $error)
     }
 }
 
+function comprobarGenero(PDO $pdo, $genero_id, array &$error): void
+{
+    if ($genero_id === '') {
+        $error[] = 'El Género es obligatorio';
+        return;
+    }
+    $filtro = filter_var($genero_id, FILTER_VALIDATE_INT);
+
+    if ($filtro === false) {
+        $error[] = 'El Género debe ser un ńumero.';
+        return;
+    }
+
+    $sent = $pdo->prepare('SELECT COUNT(*)
+                      FROM generos
+                     WHERE id = :genero_id');
+    $sent->execute([":genero_id"=> $genero_id]);
+
+    if ($sent->fetchColumn() === 0) {
+        $error[] = 'El Género no existe';
+    }
+}
+
 function comprobarErrores(array $error): void
 {
     if (!empty($error)) {
         throw new Exception;
     }
 }
+
+function insertar(
+    $pdo,
+    $titulo,
+    $anyo,
+    $sinopsis,
+    $duracion,
+    $genero_id
+    ) : void
+    {
+        $sql = 'INSERT INTO peliculas
+                    (titulo, anyo, sinopsis, duracion, genero_id)
+                VALUES (';
+        $exec = [];
+        $sql .= ':titulo,';
+        $exec[':titulo'] = $titulo;
+
+        if ($anyo !== '') {
+            $sql .= ':anyo,';
+            $exec[':anyo'] = $anyo;
+        } else {
+            $sql .= 'DEFAULT,';
+        }
+
+        if ($sinopsis !== '') {
+            $sql .= ':sinopsis,';
+            $exec[':sinopsis'] = $sinopsis;
+        } else {
+            $sql .= 'DEFAULT,';
+        }
+
+        if ($duracion !== '') {
+            $sql .= ':duracion,';
+            $exec[':duracion'] = $duracion;
+        } else {
+            $sql .= 'DEFAULT,';
+        }
+
+        $sql .= ':genero_id';
+        $exec[':genero_id'] = $genero_id;
+        $sql .= ');';
+
+        $sent = $pdo->prepare($sql);
+        $sent->execute($exec);
+        var_dump($sent);
+        var_dump($exec);
+
+    }

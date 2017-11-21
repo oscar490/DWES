@@ -7,28 +7,36 @@
     <body>
         <?php
 
+        require 'auxiliar.php';
+
         $titulo = trim(filter_input(INPUT_POST, 'titulo')) ?? '';
         $anyo = trim(filter_input(INPUT_POST, 'anyo')) ?? '';
         $sinopsis = trim(filter_input(INPUT_POST, 'sinopsis')) ?? '';
         $duracion = trim(filter_input(INPUT_POST, 'duracion')) ?? '';
         $genero_id = trim(filter_input(INPUT_POST, 'genero_id')) ?? '';
+        $error = [];
         ?>
 
-        <?php if (!empty($_POST)): ?>
+        <?php if (!empty($_POST)):
             try {
-                $error = [];
+
                 comprobarTitulo($titulo, $error);
-                comprobaranyo($anyo, $error);
+                comprobarAnyo($anyo, $error);
                 comprobarDuracion($duracion, $error);
-                comprobarGenero($genero, $error);
-                comprobarErrores($errores);
-
+                $pdo = conectar();
+                comprobarGenero($pdo, $genero_id, $error);
+                comprobarErrores($error);
+                insertar($pdo, $titulo, $anyo, $sinopsis,$duracion,  $genero_id);
+                ?>
+                <h3>Se ha insertado correctamente la película.</h3>
+                <?php
+                volver();
             } catch (Exception $e) {
-                mostrarErrores($e);
+                mostrarErrores($error);
             }
-        <?php endif ?>
-
-
+        endif;
+        if (empty($_POST) || (!empty($_POST) && !empty($error))):
+        ?>
         <form  action="insertar.php" method="post">
             <!-- Titulo -->
             <label for="titulo">Titulo: *</label>
@@ -60,6 +68,10 @@
             <input type="submit" value="Insertar">
             <input type="submit" value="Cancelar" formmethod="get" formaction="index.php">
         </form>
+        <?php
+
+        endif
+        ?>
 
     </body>
 </html>
