@@ -10,11 +10,12 @@
 
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         try {
-            comprobarParametro($id);
+            $error = [];
+            comprobarParametro($id, $error);
 
             $pdo = conectar();
-            $fila = buscarPelicula($pdo, $id);
-
+            $fila = buscarPelicula($pdo, $id, $error);
+            comprobarErrores($error);
             ?>
                 <h3>
                     ¿Seguro que desea borrar la película <?= $fila['titulo'] ?>?
