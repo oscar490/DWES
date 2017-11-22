@@ -230,13 +230,13 @@ function insertar(
         $sql .= ':titulo,';
         $exec[':titulo'] = $titulo;
 
-        $parametros = [$anyo, $sinopsis, $duracion];
-        $iden = [':anyo', ':sinopsis', ':duracion'];
+        $parametros = [':anyo'=>$anyo, ':sinopsis'=>$sinopsis,
+          ':duracion'=>$duracion];
 
-        for ($i = 0; $i < count($parametros); $i++) {
-          if ($parametros[$i] !== '') {
-            $exec[$iden[$i]] = $parametros[$i];
-            $sql .= $iden[$i] .= ', ';
+        foreach ($parametros as $k => $v) {
+          if ($v !== '') {
+            $exec[$k] = $v;
+            $sql .= $k .= ', ';
 
           } else {
             $sql .= 'DEFAULT,';
@@ -244,7 +244,7 @@ function insertar(
         }
         $sql .= ':genero_id';
         $exec[':genero_id'] = $genero_id;
-        
+
         $sql .= ');';
 
         $sent = $pdo->prepare($sql);
