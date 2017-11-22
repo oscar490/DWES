@@ -245,6 +245,8 @@ function modificar(PDO $pdo, int $id, array $valores): void
                SET $set
              WHERE id = ?";
 
-    $exec = array_filter(array_values($valores));
+    $exec = array_values(array_filter($valores));
     $exec[] = $id;
+    $sent = $pdo->prepare($sql);
+    $sent->execute($exec);
  }
