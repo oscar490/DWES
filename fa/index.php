@@ -16,8 +16,8 @@
     <body>
         <?php
         require 'auxiliar.php';
-        
-        $titulo = trim(filter_input(INPUT_GET, 'titulo')) ?? '';
+
+        $titulo = trim(filter_input(INPUT_GET, 'titulo'));
         ?>
         <div id="buscar">
 
