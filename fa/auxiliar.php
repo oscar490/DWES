@@ -88,7 +88,7 @@ function comprobarParametro($param, array &$error): void
 function volver(): void
 {
     ?>
-    <a href="index.php">Volvel</a>
+    <a href="index.php">Volver</a>
     <?php
 }
 
@@ -107,7 +107,7 @@ function mostrarErrores(array &$error): void
 }
 
 /**
- * Espaca una cadena como correctamente
+ * Escapa una cadena como correctamente
  * @param  string $mensaje La cadena a escapar.
  * @return string          La cadena escapada.
  */
@@ -125,8 +125,6 @@ function comprobarTitulo(string $titulo, array &$error): void
     if (mb_strlen($titulo) > 255) {
         $error[] = 'El título es demasiado largo';
     }
-
-    $pdo = conectar();
 
 }
 
@@ -187,6 +185,11 @@ function comprobarGenero(PDO $pdo, $genero_id, array &$error): void
     }
 }
 
+/**
+ * Comprueba si hay algún error almacenado en el array de errores. Si existe
+ * alguno, se dispara una excepcion.
+ * @param array $error Array de errores.
+ */
 function comprobarErrores(array $error): void
 {
     if (!empty($error)) {
@@ -194,50 +197,32 @@ function comprobarErrores(array $error): void
     }
 }
 
-function insertar(
-    $pdo,
-    $titulo,
-    $anyo,
-    $sinopsis,
-    $duracion,
-    $genero_id
-    ) : void
+/**
+ * Busca una película dado su título en un buscador.
+ * @param  PDO    $pdo    Instancia de la conexión con la base de datos.
+ * @param  string $titulo Título de la película
+ * @return array          Array que representa las películas encontradas.
+ */
+function buscarPeliculaInicio($pdo, $titulo)
+{
+    $sent = $pdo->prepare('SELECT *
+                            FROM peliculas
+                            WHERE lower(titulo) LIKE lower(:titulo)');
+
+    $sent->execute([':titulo' =>"%$titulo%"]);
+
+    return $sent->fetchAll();
+}
+
+function insertar(PDO $pdo, array $valores) : void
     {
-        $sql = 'INSERT INTO peliculas
-                    (titulo, anyo, sinopsis, duracion, genero_id)
-                VALUES (';
-        $exec = [];
-        $sql .= ':titulo,';
-        $exec[':titulo'] = $titulo;
-
-        if ($anyo !== '') {
-            $sql .= ':anyo,';
-            $exec[':anyo'] = $anyo;
-        } else {
-            $sql .= 'DEFAULT,';
-        }
-
-        if ($sinopsis !== '') {
-            $sql .= ':sinopsis,';
-            $exec[':sinopsis'] = $sinopsis;
-        } else {
-            $sql .= 'DEFAULT,';
-        }
-
-        if ($duracion !== '') {
-            $sql .= ':duracion,';
-            $exec[':duracion'] = $duracion;
-        } else {
-            $sql .= 'DEFAULT,';
-        }
-
-        $sql .= ':genero_id';
-        $exec[':genero_id'] = $genero_id;
-        $sql .= ');';
-
+        $cols = array_keys($valores);
+        $vals = array_fill(0, count($valores), '?');
+        $sql = 'INSERT INTO peliculas (' . implode(',', $cols) . ')'
+                            . 'VALUES (' . implode(', ', $vals) . ')';
         $sent = $pdo->prepare($sql);
-        $sent->execute($exec);
-        var_dump($sent);
-        var_dump($exec);
+        $sent->execute(array_values($valores));
+
+
 
     }

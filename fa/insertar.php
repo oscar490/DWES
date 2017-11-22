@@ -9,11 +9,11 @@
 
         require 'auxiliar.php';
 
-        $titulo = trim(filter_input(INPUT_POST, 'titulo')) ?? '';
-        $anyo = trim(filter_input(INPUT_POST, 'anyo')) ?? '';
-        $sinopsis = trim(filter_input(INPUT_POST, 'sinopsis')) ?? '';
-        $duracion = trim(filter_input(INPUT_POST, 'duracion')) ?? '';
-        $genero_id = trim(filter_input(INPUT_POST, 'genero_id')) ?? '';
+        $titulo = trim(filter_input(INPUT_POST, 'titulo'));
+        $anyo = trim(filter_input(INPUT_POST, 'anyo'));
+        $sinopsis = trim(filter_input(INPUT_POST, 'sinopsis'));
+        $duracion = trim(filter_input(INPUT_POST, 'duracion'));
+        $genero_id = trim(filter_input(INPUT_POST, 'genero_id'));
         $error = [];
         ?>
 
@@ -26,7 +26,16 @@
                 $pdo = conectar();
                 comprobarGenero($pdo, $genero_id, $error);
                 comprobarErrores($error);
-                insertar($pdo, $titulo, $anyo, $sinopsis,$duracion,  $genero_id);
+                $valores = compact(
+                    'titulo',
+                    'anyo',
+                    'sinopsis',
+                    'duracion',
+                    'genero_id'
+                );
+                $valores = array_filter($valores);
+
+                insertar($pdo, $valores);
                 ?>
                 <h3>Se ha insertado correctamente la película.</h3>
                 <?php
