@@ -230,29 +230,21 @@ function insertar(
         $sql .= ':titulo,';
         $exec[':titulo'] = $titulo;
 
-        if ($anyo !== '') {
-            $sql .= ':anyo,';
-            $exec[':anyo'] = $anyo;
-        } else {
-            $sql .= 'DEFAULT,';
-        }
+        $parametros = [$anyo, $sinopsis, $duracion];
+        $iden = [':anyo', ':sinopsis', ':duracion'];
 
-        if ($sinopsis !== '') {
-            $sql .= ':sinopsis,';
-            $exec[':sinopsis'] = $sinopsis;
-        } else {
-            $sql .= 'DEFAULT,';
-        }
+        for ($i = 0; $i < count($parametros); $i++) {
+          if ($parametros[$i] !== '') {
+            $exec[$iden[$i]] = $parametros[$i];
+            $sql .= $iden[$i] .= ', ';
 
-        if ($duracion !== '') {
-            $sql .= ':duracion,';
-            $exec[':duracion'] = $duracion;
-        } else {
+          } else {
             $sql .= 'DEFAULT,';
+          }
         }
-
         $sql .= ':genero_id';
         $exec[':genero_id'] = $genero_id;
+        
         $sql .= ');';
 
         $sent = $pdo->prepare($sql);
