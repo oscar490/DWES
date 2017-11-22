@@ -215,7 +215,7 @@ function buscarPeliculaInicio($pdo, $titulo)
 }
 
 function insertar(PDO $pdo, array $valores) : void
-    {
+{
         $cols = array_keys($valores);
         $vals = array_fill(0, count($valores), '?');
         $sql = 'INSERT INTO peliculas (' . implode(',', $cols) . ')'
@@ -225,4 +225,26 @@ function insertar(PDO $pdo, array $valores) : void
 
 
 
+}
+
+function modificar(PDO $pdo, int $id, array $valores): void
+{
+    $buenos = array_filter($valores);
+    $malos = array_diff($valores, $buenos);
+    $sets = [];
+    foreach($buenos as $k => $v) {
+        $sets[] = "$k = ?";
     }
+
+    foreach($malos as $k => $v) {
+        $sets[] = "$k = DEFAULT";
+    }
+    $set = implode(', ', $sets);
+
+    $sql = "UPDATE peliculas
+               SET $set
+             WHERE id = ?";
+
+    $exec = array_filter(array_values($valores));
+    $exec[] = $id;
+ }
