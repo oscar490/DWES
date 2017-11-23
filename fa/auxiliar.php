@@ -215,7 +215,7 @@ function buscarPeliculaInicio($pdo, $titulo)
 }
 
 function insertar(PDO $pdo, array $valores) : void
-    {
+{
         $cols = array_keys($valores);
         $vals = array_fill(0, count($valores), '?');
         $sql = 'INSERT INTO peliculas (' . implode(',', $cols) . ')'
@@ -225,4 +225,80 @@ function insertar(PDO $pdo, array $valores) : void
 
 
 
+}
+
+function comp($valor)
+{
+        return $valor !== '';
+}
+
+function modificar(PDO $pdo, int $id, array $valores): void
+{
+
+    $sets = [];
+    foreach($valores as $k => $v) {
+        $sets[] = $v === '' ? "$k = DEFAULT" : "$k = ?";
     }
+
+
+    $set = implode(', ', $sets);
+
+    $sql = "UPDATE peliculas
+               SET $set
+             WHERE id = ?";
+
+    $exec = array_values(array_filter($valores, 'comp'));
+    $exec[] = $id;
+    $sent = $pdo->prepare($sql);
+
+
+    $sent->execute($exec);
+ }
+
+
+ function formulario(array $datos, ?int $id) : void
+ {
+     if ($id === null) {
+         $destino = 'insertar.php';
+         $boton = 'Insertar';
+     } else {
+         $destino = "modificar.php?id=$id";
+         $boton = 'Modificar';
+     }
+
+
+     extract($datos);
+     ?>
+     <form  action="<?= $destino ?>" method="post">
+         <!-- Titulo -->
+         <label for="titulo">Titulo: *</label>
+         <input type="text" name="titulo" id="titulo"
+         value="<?= htmlspecialchars($titulo)?>"><br>
+
+         <!-- Año -->
+         <label for="anyo">Año: </label>
+         <input type="text" name="anyo" id="anyo"
+         value="<?= htmlspecialchars($anyo)?>"><br />
+
+         <!-- Sinopsis -->
+         <label for="sinopsis">Sinopsis: </label><br />
+         <textarea name="sinopsis" rows="8" cols="70"
+         id="sinopsis"><?= htmlspecialchars($sinopsis)?>
+         </textarea><br />
+
+         <!-- duracion -->
+         <label for="duracion">Duración: </label>
+         <input type="text" name="duracion" id="duracion"
+         value="<?= htmlspecialchars($duracion)?>"><br />
+
+         <!-- Género -->
+         <label for="genero_id">Género: *</label>
+         <input type="text" name="genero_id" id="genero_id"
+         value="<?= htmlspecialchars($genero_id)?>"><br />
+
+         <!-- Bóton de envío de datos -->
+         <input type="submit" value="<?= $boton ?>">
+         <a href="index.php">Cancelar</a>
+     </form>
+     <?php
+ }

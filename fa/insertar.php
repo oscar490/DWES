@@ -3,6 +3,10 @@
     <head>
         <meta charset="utf-8">
         <title>Insertar una nueva película</title>
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+        integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
     </head>
     <body>
         <?php
@@ -26,14 +30,13 @@
                 $pdo = conectar();
                 comprobarGenero($pdo, $genero_id, $error);
                 comprobarErrores($error);
-                $valores = compact(
+                $valores = array_filter(compact(
                     'titulo',
                     'anyo',
                     'sinopsis',
                     'duracion',
                     'genero_id'
-                );
-                $valores = array_filter($valores);
+                ), 'comp');
 
                 insertar($pdo, $valores);
                 ?>
@@ -45,39 +48,13 @@
             }
         endif;
         if (empty($_POST) || (!empty($_POST) && !empty($error))):
-        ?>
-        <form  action="insertar.php" method="post">
-            <!-- Titulo -->
-            <label for="titulo">Titulo: *</label>
-            <input type="text" name="titulo" id="titulo"
-            value="<?= htmlspecialchars($titulo)?>"><br>
-
-            <!-- Año -->
-            <label for="anyo">Año: </label>
-            <input type="text" name="anyo" id="anyo"
-            value="<?= htmlspecialchars($anyo)?>"><br />
-
-            <!-- Sinopsis -->
-            <label for="sinopsis">Sinopsis: </label><br />
-            <textarea name="sinopsis" rows="8" cols="70"
-            id="sinopsis"><?= htmlspecialchars($sinopsis)?>
-            </textarea><br />
-
-            <!-- duracion -->
-            <label for="duracion">Duración: </label>
-            <input type="text" name="duracion" id="duracion"
-            value="<?= htmlspecialchars($duracion)?>"><br />
-
-            <!-- Género -->
-            <label for="genero_id">Género: *</label>
-            <input type="text" name="genero_id" id="genero_id"
-            value="<?= htmlspecialchars($genero_id)?>"><br />
-
-            <!-- Bóton de envío de datos -->
-            <input type="submit" value="Insertar">
-            <input type="submit" value="Cancelar" formmethod="get" formaction="index.php">
-        </form>
-        <?php
+            formulario(compact(
+                'titulo',
+                'anyo',
+                'sinopsis',
+                'duracion',
+                'genero_id'
+            ), null);
 
         endif
         ?>
