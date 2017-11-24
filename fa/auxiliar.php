@@ -302,3 +302,47 @@ function modificar(PDO $pdo, int $id, array $valores): void
      </form>
      <?php
  }
+
+ function comprobarUsuario(string $usuario, array $error): void
+ {
+     if ($usuario === '') {
+         $error[] = 'El usuario es obligatorio';
+     }
+     if (mb_strlen($usuario) > 255) {
+         $error[] = 'El usuario es demasiado largo';
+     }
+     if (mb_strpos($usuario, ' ') !== false) {
+         $error[] = 'El usuario no puede contener espacios';
+     }
+ }
+
+ function comprobarPassword($password, array $error): void
+ {
+     if ($password === '') {
+         $error[] = 'La contraseña es obligatoria';
+     }
+ }
+
+ function buscarUsuario(string $usuario, string $password, array $error)
+ {
+     $pdo = conectar();
+
+     $sent = $pdo->prepare("SELECT *
+                              FROM usuarios
+                             WHERE usuario = :usuario");
+
+     $sent->execute([':usuario' => $usuario]);
+
+     $fila = $sent->fetch();
+
+     if (empty($fila)) {
+         $error[] = 'El usuario no existe';
+     }
+     if (!password_verify($password, $fila['password'])) {
+         $error[] = 'La contraseña no coincide';
+         throw new Exception;
+     }
+
+     return $fila;
+
+ }

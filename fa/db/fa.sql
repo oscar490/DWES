@@ -40,3 +40,21 @@ INSERT INTO peliculas (titulo, anyo, sinopsis, duracion, genero_id)
 VALUES ('Los últimos Jedi', 2017, 'Va uno se cae y se muere', 204, 3)
      , ('Los Goonies', 1985, 'Unos niños que se mueren',50, 1)
      , ('Aqui llega Condemor', 1996, 'Mejor no contar nada', 90, 2);
+
+
+
+
+DROP TABLE usuarios CASCADE;
+
+CREATE TABLE usuarios
+(
+      id       BIGSERIAL    PRIMARY KEY
+    , usuario  VARCHAR(255) NOT NULL UNIQUE
+                            CONSTRAINT ck_usuario_sin_espacion
+                            CHECK (position(' ' in usuario) = 0)
+    , password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO usuarios (usuario, password)
+     VALUES ('pepe', crypt('pepe', gen_salt('bf', 10)))
+         ,   ('juan', crypt('juan', gen_salt('bf', 10)));

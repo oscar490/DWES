@@ -23,6 +23,9 @@
         $titulo = trim(filter_input(INPUT_GET, 'titulo')) ?? '';
         ?>
         <div class="container">
+            <div class="col-md-offset-10 col-md-2">
+                <a class="btn btn-info"href='login.php'>Login</a>
+            </div>
             <?php if (isset($_SESSION['mensaje'])): ?>
                 <div>
                     <?= $_SESSION['mensaje'] ?>
