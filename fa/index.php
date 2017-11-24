@@ -21,8 +21,15 @@
     <body>
         <?php
         $titulo = trim(filter_input(INPUT_GET, 'titulo')) ?? '';
-
         ?>
+        <div class="container">
+            <?php if (isset($_SESSION['mensaje'])): ?>
+                <div>
+                    <?= $_SESSION['mensaje'] ?>
+                </div>
+                <?php unset($_SESSION['mensaje']) ?>
+            <?php endif ?>
+        </div>
         <div id="buscar">
           <fieldset>
               <legend>Buscar</legend>

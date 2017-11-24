@@ -40,10 +40,9 @@
                 ), 'comp');
 
                 insertar($pdo, $valores);
-                ?>
-                <h3>Se ha insertado correctamente la película.</h3>
-                <?php
-                volver();
+                $_SESSION['mensaje'] = 'La Película se ha insertado correctamente.';
+
+                header('Location: index.php');
             } catch (Exception $e) {
                 mostrarErrores($error);
             }
