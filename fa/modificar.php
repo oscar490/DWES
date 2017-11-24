@@ -45,13 +45,11 @@
 
 
                     modificar($pdo, $id, $valores);
-                    ?>
-                    <h3>La película se ha modificado perfectamente.</h3>
-                    <?php
+                    $_SESSION['mensaje'] = 'La Película se ha modificado correctamente.';
                     volver();
                 } catch (Exception $e) {
                     mostrarErrores($error);
-                    volver();
+                    header('Location: index.php');
                 }
             endif;
             if (empty($_POST) || (!empty($_POST) && !empty($error))):
