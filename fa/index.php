@@ -23,6 +23,17 @@
         $titulo = trim(filter_input(INPUT_GET, 'titulo')) ?? '';
         ?>
         <div class="container">
+
+            <?php if (isset($_SESSION['usuario'])): ?>
+                <?= $_SESSION['usuario']['nombre'] ?>
+                <div class="col-md-offset-10 col-md-2">
+                    <a class="btn btn-info"href='logout.php'>Logout</a>
+                </div>
+            <?php else: ?>
+                <div class="col-md-offset-10 col-md-2">
+                    <a class="btn btn-info"href='login.php'>Login</a>
+                </div>
+            <?php endif ?>
             <?php if (isset($_SESSION['mensaje'])): ?>
                 <div>
                     <?= $_SESSION['mensaje'] ?>

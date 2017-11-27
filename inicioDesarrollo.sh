@@ -58,17 +58,39 @@ echo "sudo -u postgres psql -h localhost -U " $dominio " -d "$dominio  > db/acce
 sudo chmod a+x db/inyeccionSQL.sh
 sudo chmod a+x db/acceso.sh
 
-read -p "Nombre del repositorio remoto para enlazar: " repo
+echo
+read -p "¿Desea enlazar repositorio con GITHUB? (si/no): " enla
 
-git remote add origin https://github.com/oscar490/$repo.git
-git add .
-git commit -m "Carga inicial"
-git push -u origin master
-echo Se ha enlazado perfectamente
+if [ $enla == "si" ]
+then
+
+    read -p "Nombre del repositorio remoto para enlazar: " repo
+
+    git remote add origin https://github.com/oscar490/$repo.git
+    git add .
+    git commit -m "Carga inicial"
+    git push -u origin master
+    echo Se ha enlazado perfectamente
+    xdg-open https://github.com/oscar490/$repo.git
+fi
+
+#read -p "¿Desea enlazar un repositorio local a uno remoto existente?:(si/no) " loca
+
+#if [ $loca == "si" ]
+#then
+#    read -p "Nombre del repositorio remoto: " remoto
+#    git remote add origin https://github.com/oscar490/$remoto.git
+#    git pull
+#    echo Se ha enlazado el repositorio local $dominio con repositorio
+#    echo remoto https://github.com/oscar490/$remoto.git
+#    echo
+#    xdg-open https://github.com/oscar490/$remoto.git
+#fi
 # Se abre el proyecto con atom.
+echo Se ha creado la carpeta $dominio
 atom ~/web/$dominio
 xdg-open http://$dominio.local
-xdg-open https://github.com/oscar490/$repo.git
+
 
 
 
