@@ -43,11 +43,12 @@
                 $_SESSION['mensaje'] = 'La Película se ha insertado correctamente.';
 
                 header('Location: index.php');
+                return;
             } catch (Exception $e) {
                 mostrarErrores($error);
             }
         endif;
-        if (empty($_POST) || (!empty($_POST) && !empty($error))):
+
             formulario(compact(
                 'titulo',
                 'anyo',
@@ -56,7 +57,7 @@
                 'genero_id'
             ), null);
 
-        endif
+        
         ?>
 
     </body>

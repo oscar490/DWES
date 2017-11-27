@@ -237,7 +237,7 @@ function modificar(PDO $pdo, int $id, array $valores): void
 
     $sets = [];
     foreach($valores as $k => $v) {
-        $sets[] = $v === '' ? "$k = DEFAULT" : "$k = ?";
+        $sets[] = $v === '' ? "$k = NULL" : "$k = ?";
     }
 
 
