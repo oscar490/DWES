@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS generos CASCADE;
 
 CREATE TABLE generos
 (
-      id     BIGSERIAL PRIMARY KEY
+      id     BIGSERIAL    PRIMARY KEY
     , genero VARCHAR(255) NOT NULL UNIQUE
 );
 
@@ -44,7 +44,7 @@ VALUES ('Los últimos Jedi', 2017, 'Va uno se cae y se muere', 204, 3)
 
 
 
-DROP TABLE usuarios CASCADE;
+DROP TABLE IF EXISTS usuarios CASCADE;
 
 CREATE TABLE usuarios
 (

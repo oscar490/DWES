@@ -303,7 +303,7 @@ function modificar(PDO $pdo, int $id, array $valores): void
      <?php
  }
 
- function comprobarUsuario(string $usuario, array $error): void
+ function comprobarUsuario(string $usuario, array &$error): void
  {
      if ($usuario === '') {
          $error[] = 'El usuario es obligatorio';
@@ -316,14 +316,14 @@ function modificar(PDO $pdo, int $id, array $valores): void
      }
  }
 
- function comprobarPassword($password, array $error): void
+ function comprobarPassword($password, array &$error): void
  {
      if ($password === '') {
          $error[] = 'La contraseña es obligatoria';
      }
  }
 
- function buscarUsuario(string $usuario, string $password, array $error)
+ function buscarUsuario(string $usuario, string $password, array &$error)
  {
      $pdo = conectar();
 
