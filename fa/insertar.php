@@ -14,6 +14,10 @@
 
         require 'auxiliar.php';
 
+        if (!comprobarLogueado()) {
+            return;
+        }
+
         $titulo = trim(filter_input(INPUT_POST, 'titulo'));
         $anyo = trim(filter_input(INPUT_POST, 'anyo'));
         $sinopsis = trim(filter_input(INPUT_POST, 'sinopsis'));
@@ -57,7 +61,7 @@
                 'genero_id'
             ), null);
 
-        
+
         ?>
 
     </body>

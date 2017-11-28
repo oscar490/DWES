@@ -346,3 +346,13 @@ function modificar(PDO $pdo, int $id, array $valores): void
      return $fila;
 
  }
+
+ function comprobarLogueado(): bool
+ {
+     if (!isset($_SESSION['usuario'])) {
+         $_SESSION['mensaje'] = 'Usuario no identificado';
+         header('Location: index.php');
+         return false;
+     }
+     return true;
+ }
