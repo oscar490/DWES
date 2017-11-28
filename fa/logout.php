@@ -1,4 +1,10 @@
 <?php session_start();
+
+require 'auxiliar.php';
+
+if (!comprobarLogueado()) {
+    return;
+}
 $_SESSION = [];
 
 $params = session_get_cookie_params();

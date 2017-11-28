@@ -12,6 +12,7 @@
     <body>
         <?php
         require 'auxiliar.php';
+        comprobarLogueado();
 
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) ?? false;
         try {

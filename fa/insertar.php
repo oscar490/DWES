@@ -14,9 +14,7 @@
 
         require 'auxiliar.php';
 
-        if (!isset($_SESSION['usuario'])) {
-            $_SESSION['mensaje'] = 'Usuario no identificado';
-            header('Location: index.php');
+        if (!comprobarLogueado()) {
             return;
         }
 
