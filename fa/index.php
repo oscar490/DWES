@@ -97,7 +97,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="borrar.php?id=<?= htmlspecialchars($fila['id'])?>">
+                                <a href="hacer_borrado.php?id=<?= htmlspecialchars($fila['id'])?>">
                                     Borrar
                                 </a>
                             </td>

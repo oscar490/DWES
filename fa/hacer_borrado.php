@@ -13,6 +13,7 @@
         }
 
         $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT) ?? false;
+        var_dump($id);
         try {
             $error = [];
             comprobarParametro($id, $error);
