@@ -12,9 +12,19 @@ class Prueba
 
     protected $protegida = 'protegida';
 
-    public function __construct($valor=selft::PUBLICA_DEFAULT)
+    public function __construct($valor=self::PUBLICA_DEFAULT)
     {
         $this->publica = $valor;
+    }
+
+    public function incrementaEstatica()
+    {
+        self::$estatica++;
+    }
+
+    public static function metodoEstatico()
+    {
+        echo 'El valor de la propiedad estática es ' . self::$estatica;
     }
 
     public function getPrivada()
